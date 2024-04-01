@@ -1,0 +1,204 @@
+<!-- <app-nav-bar></app-nav-bar> -->
+<div class="content-wrapper" style="min-height: 1365.62px;">
+    <section class="content-header" style="margin-top: 1em;">
+        <div class="container-fluid">
+            <div class="row mb-2">
+               
+                <div class="col-sm-6">
+                    <h4>Lista de Ingredientes</h4>
+                </div>
+                
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+
+    <div class="content" >
+        <div class=" container-fluid">
+                
+        <!-- left column -->
+        <div class="col-md-12">
+            <!-- general form elements -->
+            <div class="card card-primary" style="min-height: 10em;">
+                <br/>
+                <div class="col-md-12 table-responsive container-fluid"  >
+
+                    <form [formGroup]="capturaFormBuscar">
+                        <div class="row">
+                            <div class="form-group col-md-3">
+                                <label>Estado</label>
+                                <select formControlName="busca" class="form-control select2 select2-hidden-accessible" style="width: 100%;" tabindex="-1" aria-hidden="true">
+                                    <option disabled selected style="display:none;"></option>
+                                    <option *ngFor="let item of _combo_buscar" [value]="item.nombre">{{item.nombre}}</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-9 d-flex">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-person-fill-add ms-auto" viewBox="0 0 16 16" style="cursor: pointer;" data-bs-toggle="tooltip" data-bs-placement="top" title="Agregar Usuario" (click)="NuevoUsuario()" 
+                                data-bs-toggle="modal" data-bs-target="#modalusuario">
+                                    <path d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7m.5-5v1h1a.5.5 0 0 1 0 1h-1v1a.5.5 0 0 1-1 0v-1h-1a.5.5 0 0 1 0-1h1v-1a.5.5 0 0 1 1 0m-2-6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
+                                    <path d="M2 13c0 1 1 1 1 1h5.256A4.5 4.5 0 0 1 8 12.5a4.5 4.5 0 0 1 1.544-3.393Q8.844 9.002 8 9c-5 0-6 3-6 4"/>
+                                </svg>
+                            </div>
+                        </div>
+                    </form>
+                    <br>
+                    <table  id="table2" [dtOptions]="dtOptions" datatable class="row-border hover" >
+                        <thead>
+                            <tr>
+                                <th>Correo</th>
+                                <th>Título</th>
+                                <th>Nombre</th>
+                                <th>Ciudad</th>
+                                <th>Estado</th>
+                                <th>Télefono</th>
+                                <th>Rol</th>
+                                <th>Activo</th>
+                                <th>Opciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Tiger Nixon</td>
+                                <td>System Architect</td>
+                                <td>Edinburgh</td>
+                                <td>61</td>
+                                <td>2011-04-25</td>
+                                <td>$320,800</td>
+                                <td>61</td>
+                                <td>2011-04-25</td>
+                                <td>$320,800</td>
+                            </tr>
+                        </tbody>
+
+                    </table>
+
+                    
+                </div>
+                
+            </div>
+        </div>
+
+
+            
+        </div>
+    </div>
+
+</div>
+
+  <!-- Modal -->
+  <div class="modal fade" id="modalusuario" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="exampleModalLabel">{{title_modal}}</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="row">
+                        <div class="col-lg-6 col-sm-12">
+                            <label>Título</label>
+                            <input id="nombre_usuario" formControlName="nombre_usuario" type="text" class="form-control" placeholder="" autocomplete="off" autofocus>
+                        </div>
+                        <div class="col-lg-6 col-sm-12">
+                            <label>Nombre(s)</label>
+                            <input id="nombre_usuario" formControlName="nombre_usuario" type="text" class="form-control" placeholder="" autocomplete="off" autofocus>
+                        </div>
+
+                    </div>
+                    <br/>
+               <div class="row">
+                    <div class="col-lg-6 col-sm-12">
+                        <label>Apellido Paterno</label>
+                        <input id="nombre" formControlName="nombre" type="text" class="form-control" placeholder="" autocomplete="off" autofocus>
+                    </div>
+                    <div class="col-lg-6 col-sm-12">
+                        <label>Apellido Materno</label>
+                        <input id="correo" formControlName="correo" type="email" class="form-control" placeholder="" autocomplete="off" autofocus>
+                    </div>
+
+                </div>
+                <br/>
+                <div class="row">
+                    <div class="col-lg-6 col-sm-12">
+                        <label>Correo</label>
+                        <input id="correo" formControlName="correo" type="email" class="form-control" placeholder="" autocomplete="off" autofocus>
+                    </div>
+                    
+                </div>
+                <br/>
+
+                <label>Registro de Teléfono</label>
+                <div class="card card-primary" style="min-height: 10em;">
+                    
+                    <div class="row" style="margin-left: .5em; margin-right: .5em;margin-top: .2em;">
+                        <div class="col-lg-3 col-sm-12">
+                            <label>Tipo</label>
+                            <select class="form-select" aria-label="Default select example">
+                                <option value="Celular">Celular</option>
+                                <option value="Fijo">Fijo</option>
+                              </select>
+                        </div>
+                        <div class="col-lg-3 col-sm-12">
+                            <label>Correo</label>
+                            <input id="correo" formControlName="correo" type="email" class="form-control" placeholder="" autocomplete="off" autofocus>
+                        </div>
+                        <div class="col-lg-3 col-sm-12">
+                            <label>Teléfono</label>
+                            <input id="correo" formControlName="correo" type="email" class="form-control" placeholder="" autocomplete="off" autofocus>
+                        </div>
+                        
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-lg-6 col-sm-12">
+                        <label>Estado</label>
+                        <select class="form-select" aria-label="Default select example">
+                            <option selected>Open this select menu</option>
+                            <option value="1">One</option>
+                            <option value="2">Two</option>
+                            <option value="3">Three</option>
+                          </select>
+                    </div>
+                    <div class="col-lg-6 col-sm-12">
+                        <label>Ciudad</label>
+                        <select class="form-select" aria-label="Default select example">
+                            <option selected>Open this select menu</option>
+                            <option value="1">One</option>
+                            <option value="2">Two</option>
+                            <option value="3">Three</option>
+                          </select>
+                    </div>
+
+                    
+                </div>
+                <br/> 
+                <div class="row">
+                    <div class="col-lg-6 col-sm-12">
+                        <label>Roles</label>
+                        <select class="form-select" aria-label="Default select example">
+                            <option selected>Open this select menu</option>
+                            <option value="1">One</option>
+                            <option value="2">Two</option>
+                            <option value="3">Three</option>
+                          </select>
+                    </div>
+                    <div class="col-lg-6 col-sm-12">
+                        <label>Foto</label>
+                        <div class="form-group">
+                            <input id="file" type="file" accept=".jpg,.png" >
+
+                        </div>
+                        
+                    </div>
+                </div>
+                <br/>
+                </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+              <button type="button" class="btn btn-primary">Guardar</button>
+            </div>
+          </div>
+    </div>
+  </div>

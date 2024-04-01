@@ -1,0 +1,131 @@
+<!-- <nav class="navbar bg-custom fixed-top"  style="background-color: white !important;">
+  <div class="container-fluid">
+    <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation" style="color: #75b2c4 !important; border: 2px solid  transparent;">
+
+      <i class="fa-solid fa-bars" style="font-size: xx-large;"></i>
+    </button>
+    <a class="navbar-brand" href="#" style="color: rgb(0, 0, 0);font-size: 20px;" >
+        <a class="navbar-brand">
+            <i class="fas fa-power-off" title="Cerrar Sesión" style="color:red"></i>
+          </a>
+        <label>Juan Alberto Fernández Castro</label>
+        &nbsp;
+        <img src="../../assets/images/1.png" style="width: 8%; height: 8%;" alt="Miniatura" class="img-thumbnail rounded-circle">
+    </a>
+
+    
+  </div>
+
+  <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title" id="offcanvasNavbarLabel" style="color: #FCC8BE;"><strong>AlmaSana</strong></h5>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+      <ul *ngIf="MODULOSPORGRUPO" class="navbar-nav justify-content-end flex-grow-1 pe-3">
+        <li class="nav-item" *ngFor="let grupo of MODULOSPORGRUPO; let i = index" (click)="toggleCollapse(i)" [class.selected]="collapsedItemIndices.has(i)">
+              <a class="nav-link"  style="color:#7EB2C4;" href="#" data-bs-toggle="collapse" [attr.data-bs-target]="'#collapseExample-' + i" aria-expanded="false" [attr.aria-controls]="'collapseExample-' + i">
+                  <img style="width: 10%;height: 10%;" src="{{grupo.icono_grupo}}">
+                  <strong> {{grupo.nombre_grupo}} </strong>
+                 
+              </a>
+              <ul class="collapse custom-collapse" [attr.id]="'collapseExample-' + i" [ngClass]="{'show': isCollapsed}">
+                  <li *ngFor="let subitem of grupo.modulos">
+                      <a routerLink="/{{subitem.componente}}">{{subitem.nombre_modulo}}</a>
+                  </li>
+              </ul>
+          </li>  
+      </ul>
+    </div>
+  </div>
+</nav> -->
+
+
+<!-- <nav class="navbar navbar-light bg-light" style="background-color: white !important;">
+  <div class="container-fluid">
+    <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation" style="color: #75b2c4 !important; border: 2px solid transparent;">
+      <i class="fa-solid fa-bars" style="font-size: xx-large;"></i>
+    </button>
+
+    <div style="float: right; margin-right: 2em;">
+      <a style="width: 2em; background-color: transparent; border-color: transparent; cursor:pointer; margin-right: 1em;">     
+        <strong>Alberto Fernandez Castro</strong> 
+        <img class="img-thumbnail rounded-circle" src="../../assets/images/user.gif" width="60" height="60" style="cursor:pointer; margin-left: 10px;">
+        
+      </a>
+
+      <img  (click)="CerrarSesion()" src="../../assets/images/11 logout.png" width="30" height="30" style="cursor:pointer; margin-left: 10px;">
+    </div>
+  </div>
+
+  <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title" id="offcanvasNavbarLabel" style="color: #FCC8BE;"><strong>AlmaSana</strong></h5>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+      <ul *ngIf="MODULOSPORGRUPO" class="navbar-nav justify-content-end flex-grow-1 pe-3">
+        <li class="nav-item" *ngFor="let grupo of MODULOSPORGRUPO; let i = index" (click)="toggleCollapse(i)" [class.selected]="collapsedItemIndices.has(i)">
+              <a class="nav-link"  style="color:#7EB2C4;" href="#" data-bs-toggle="collapse" [attr.data-bs-target]="'#collapseExample-' + i" aria-expanded="false" [attr.aria-controls]="'collapseExample-' + i">
+                  <img style="width: 10%;height: 10%;" src="{{grupo.icono_grupo}}">
+                  &nbsp;&nbsp;
+                  <strong> {{grupo.nombre_grupo}} </strong>
+                 
+              </a>
+              <ul class="collapse custom-collapse" [attr.id]="'collapseExample-' + i" [ngClass]="{'show': isCollapsed}">
+                  <li *ngFor="let subitem of grupo.modulos">
+                      <a routerLink="/{{subitem.componente}}">{{subitem.nombre_modulo}}</a>
+                  </li>
+              </ul>
+          </li>  
+      </ul>
+    </div>
+  </div>
+</nav> -->
+
+<nav class="navbar navbar-light bg-light" style="background-color: white !important;">
+  <div class="container-fluid">
+    <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation" style="color: #75b2c4 !important; border: 2px solid transparent;">
+      <i class="fa-solid fa-bars" style="font-size: xx-large;"></i>
+    </button>
+
+    <div style="float: right; margin-right: 2em;">
+      <a style="width: 2em; background-color: transparent; border-color: transparent; cursor:pointer; margin-right: 1em;">     
+        <strong>Alberto Fernandez Castro</strong> 
+        <img class="img-thumbnail rounded-circle" src="../../assets/images/user.gif" width="60" height="60" style="cursor:pointer; margin-left: 10px;">
+        
+      </a>
+
+      <img  (click)="CerrarSesion()" src="../../assets/images/11 logout.png" width="30" height="30" style="cursor:pointer; margin-left: 10px;">
+    </div>
+  </div>
+
+  <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title" id="offcanvasNavbarLabel" style="color: #FCC8BE;"><strong>AlmaSana</strong></h5>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body" style="margin-left: -2em;">
+      <ul class="sidebar-nav" [ngClass]="{'show': !isCollapsed}">
+        <li class="sidebar-item" *ngFor="let grupo of MODULOSPORGRUPO; let i = index" (click)="toggleCollapse(i)" [class.selected]="collapsedItemIndices.has(i)">
+          <a class="sidebar-link"  style="color:#7EB2C4;" href="#" data-bs-toggle="collapse" [attr.data-bs-target]="'#collapseExample-' + i" aria-expanded="false" [attr.aria-controls]="'collapseExample-' + i">
+              <img style="width: 10%;height: 10%;" src="{{grupo.icono_grupo}}">
+              &nbsp;&nbsp;
+              <strong> {{grupo.nombre_grupo}} </strong>
+             
+          </a>
+          <ul class="collapse custom-collapse" data-bs-parent="#offcanvasNavbar" [attr.id]="'collapseExample-' + i">
+            <li *ngFor="let subitem of grupo.modulos">
+                <a routerLink="/{{subitem.componente}}" style="color: black;">{{subitem.nombre_modulo}}</a>
+            </li>
+        </ul>
+        </li> 
+      </ul>
+    </div>
+  </div>
+  
+</nav>
+
+
+
+
