@@ -1,10 +1,28 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { NavBarComponent } from './nav-bar/nav-bar.component';
+import { AuthService } from '../app/services/auth.service';
+import { TerapeutasComponent } from './catalogos/terapeutas/terapeutas.component';
+import { UsuariosComponent } from './catalogos/usuarios/usuarios.component';
+import { LoginComponent } from './login/login/login.component';
+import { HomeComponent } from './home/home.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
 
-const routes: Routes = [];
+
+const routes: Routes = [
+  { path: '', component: LoginComponent, pathMatch: "full" },
+  { path: 'home', component: HomeComponent, pathMatch: "full" },
+  { path: 'terapeutas', component: TerapeutasComponent, pathMatch: "full" },
+  { path: 'usuarios', component: UsuariosComponent, pathMatch: "full" },
+  { path: 'reset-password', component: ResetPasswordComponent, pathMatch:"full"},
+];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  imports: [RouterModule.forRoot(routes, {
+    initialNavigation: 'enabled'
+
+  })],
+  exports: [RouterModule],
+  providers: [AuthService]
 })
 export class AppRoutingModule { }

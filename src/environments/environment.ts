@@ -6,6 +6,13 @@ export const environment = {
   production: false
 };
 
+//export const SERVER_URL = 'http://localhost:27017/api/';
+export const SERVER_URL = 'http://74.208.145.99:27017/api/';
+//export const DB_INSTANCE = 'SYS_PRUEBAS';
+export const DB_INSTANCE = 'SYS';
+//export const IP_SERVER = 'http://localhost:27017/';
+export const IP_SERVER = 'http://74.208.145.99:27017/';
+
 /*
  * For easier debugging in development mode, you can import the following file
  * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.
