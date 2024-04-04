@@ -10,3 +10,16 @@ body {
     padding-left: 2em;
     padding-right: 2em;
   }
+
+  .modal-header {
+    background-color: #90b5c2;
+    color: white;
+    /* Otros estilos personalizados */
+  }
+
+  .content-wrapper{
+    margin-top: 6em;
+    min-height: auto;
+  }
+
+

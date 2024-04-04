@@ -7,6 +7,7 @@ import { UsuariosComponent } from './catalogos/usuarios/usuarios.component';
 import { LoginComponent } from './login/login/login.component';
 import { HomeComponent } from './home/home.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { RolesComponent } from './catalogos/usuarios/roles/roles.component';
 
 
 const routes: Routes = [
@@ -14,6 +15,7 @@ const routes: Routes = [
   { path: 'home', component: HomeComponent, pathMatch: "full" },
   { path: 'terapeutas', component: TerapeutasComponent, pathMatch: "full" },
   { path: 'usuarios', component: UsuariosComponent, pathMatch: "full" },
+  { path: 'roles', component: RolesComponent, pathMatch: "full" },
   { path: 'reset-password', component: ResetPasswordComponent, pathMatch:"full"},
 ];
 

@@ -26,6 +26,7 @@
     "datatables.net-bs5": "^1.11.3",
     "datatables.net-dt": "^1.10.22",
     "jquery": "^3.7.1",
+    "ngx-image-cropper": "^7.2.1",
     "ngx-mask": "^17.0.7",
     "rxjs": "~7.5.0",
     "sweetalert2": "^11.10.6",

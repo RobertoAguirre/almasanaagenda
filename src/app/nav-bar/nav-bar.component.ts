@@ -1,4 +1,4 @@
-import { Component, OnInit, Renderer2 } from '@angular/core';
+import { Component, OnInit, OnDestroy, Renderer2,HostListener  } from '@angular/core';
 import { AppComponent } from '../app.component';
 import { ApiService } from '../services/api.service';
 import Swal from 'sweetalert2';
@@ -6,15 +6,20 @@ import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { ElementRef } from '@angular/core';
 
+declare var bootstrap: any;
+
 @Component({
   selector: 'app-nav-bar',
   templateUrl: './nav-bar.component.html',
   styleUrls: ['./nav-bar.component.css']
 })
 export class NavBarComponent implements OnInit {
+
+  entro = 0;
   isCollapsed = true;
   //isCollapsed: boolean[] = [];
   offcanvasOpened = false;
+  listenerRegistered = false;
   expandedIndex: number = -1;
   menuItems: string[] = ['Action', 'Another action', 'Yet another action'];
   //collapsedItemIndices: Set<number> = new Set<number>();
@@ -31,25 +36,49 @@ export class NavBarComponent implements OnInit {
     public router:Router,
     public authService:AuthService,
     private appComponent: AppComponent,
-    private renderer: Renderer2
+    private renderer: Renderer2,
+    private elementRef: ElementRef
   ) { 
-    this.renderer.listen('window', 'shown.bs.offcanvas', () => {
-      if (!this.offcanvasOpened) {
-        console.log('Offcanvas abierto');
-        // Realizar acciones adicionales si es necesario
-        this.offcanvasOpened = true;
-      
-      }
-    });
+
+    // this.renderer.listen('window', 'shown.bs.offcanvas', () => {
+    //   if (!this.offcanvasOpened) {
+    //     console.log('Offcanvas abierto');
+    //     // Realizar acciones adicionales si es necesario
+    //     this.offcanvasOpened = true;
+       
+    //   }
+    // });
     //this.isCollapsed = new Array(this.MODULOSPORGRUPO.length).fill(true);
   }
 
+  
+
+/*   @HostListener('document:click', ['$event'])
+  clickOutside(event: any) {
+    const offcanvasElement = document.getElementById('offcanvasNavbar');
+    if (!(offcanvasElement as HTMLElement).contains(event.target as Node)) {
+      // Llamar a la función que deseas ejecutar cuando se hace clic fuera del offcanvas
+      console.log('fuera');
+      if(this.offcanvasOpened === true){
+        this.offcanvasOpened = false;
+      }
+      
+    }
+  } */
+
   isOpen = false;
 
-  toggleMenu() {
-    this.isOpen = !this.isOpen;
-  }
 
+
+  toggleMenu() {
+    //this.isOpen = !this.isOpen;
+/* 
+    const backdrop = document.querySelector('.offcanvas-backdrop');
+    backdrop.remove(); */
+  }
+  toggleSidebar(){
+    this.isCollapsed = !this.isCollapsed;
+  }
   toggleCollapse(index: number) {
     //this.isCollapsed = !this.isCollapsed;
     
@@ -89,9 +118,55 @@ export class NavBarComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    if (!this.listenerRegistered) {
+      this.setupOffcanvasListener();
+      this.listenerRegistered = true;
+    }
+    this.registrarEvento();
+  
     console.log('navbar');
     this.GeneraMenu();
   }
+
+  setupOffcanvasListener() {
+    this.renderer.listen('window', 'shown.bs.offcanvas', () => {
+      console.log('Offcanvas abierto');
+      this.offcanvasOpened = false;
+      // Realizar acciones adicionales si es necesario
+      this.offcanvasOpened = true;
+    });
+  }
+
+  offcanvasOpenedx(event: Event) {
+    event.stopPropagation(); // Detener la propagación del evento
+    console.log('El offcanvas se ha abierto');
+    // Aquí puedes ejecutar cualquier función que desees cuando se abra el offcanvas
+  }
+
+  registrarEvento() {
+    // this.renderer.listen('window', 'shown.bs.offcanvas', () => {
+    //   if (!this.offcanvasOpened) {
+    //     console.log('Offcanvas abierto');
+    //     // Realizar acciones adicionales si es necesario
+    //     const offcanvas = document.querySelector('.offcanvas');
+    //     const backdrop = document.querySelector('.offcanvas-backdrop');
+    //     const offcanvasInstance = new bootstrap.Offcanvas(offcanvas);
+    //     offcanvasInstance.hide();
+    //     backdrop.remove();
+    //       const backdropElement = document.querySelector('.offcanvas-backdrop');
+    //     backdropElement.classList.remove('invisible');
+          
+        
+
+    //     this.offcanvasOpened = true;
+       
+    //   }
+    // });
+  }
+
+
+
+ 
 
   Filtrar(nombre_grupo) {
 

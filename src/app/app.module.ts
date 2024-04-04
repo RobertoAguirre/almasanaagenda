@@ -7,6 +7,7 @@ import { DataTablesModule } from 'angular-datatables';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
+
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavBarComponent } from './nav-bar/nav-bar.component';
@@ -15,6 +16,7 @@ import { UsuariosComponent } from './catalogos/usuarios/usuarios.component';
 import { LoginComponent } from './login/login/login.component';
 import { HomeComponent } from './home/home.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { RolesComponent } from './catalogos/usuarios/roles/roles.component';
 
 
 @NgModule({
@@ -26,6 +28,7 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
     LoginComponent,
     HomeComponent,
     ResetPasswordComponent,
+    RolesComponent,
 
   ],
   imports: [
@@ -34,7 +37,7 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

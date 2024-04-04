@@ -1,0 +1,271 @@
+<!-- <app-nav-bar></app-nav-bar> -->
+<div class="content-wrapper" >
+    <section class="content-header" style="margin-top: 1em;">
+        <div class="container-fluid">
+            <div class="row mb-2">
+               
+                <div class="col-sm-6">
+                    <h4>Roles</h4>
+                </div>
+                
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+
+    <div class="content" >
+        <div class=" container-fluid">
+                
+        <!-- left column -->
+        <div class="col-md-12">
+            <!-- general form elements -->
+            <div class="card card-primary" style="min-height: 10em;">
+                <br/>
+                <div class="col-md-12 table-responsive container-fluid"  >
+
+                    <form [formGroup]="capturaFormBuscar">
+                        <div class="row">
+                            
+                            <div class="form-group col-md-12 d-flex">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-person-fill-add ms-auto" viewBox="0 0 16 16" style="cursor: pointer;" data-bs-toggle="tooltip" data-bs-placement="top" title="Agregar Rol" (click)="Nuevo()" 
+                                data-bs-toggle="modal" data-bs-target="#modalusuario">
+                                <title>Agregar Rol</title>
+                                <path d="M10 .5a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5.5.5 0 0 1-.5.5.5.5 0 0 0-.5.5V2a.5.5 0 0 0 .5.5h5A.5.5 0 0 0 11 2v-.5a.5.5 0 0 0-.5-.5.5.5 0 0 1-.5-.5"/>
+                                <path d="M4.085 1H3.5A1.5 1.5 0 0 0 2 2.5v12A1.5 1.5 0 0 0 3.5 16h9a1.5 1.5 0 0 0 1.5-1.5v-12A1.5 1.5 0 0 0 12.5 1h-.585q.084.236.085.5V2a1.5 1.5 0 0 1-1.5 1.5h-5A1.5 1.5 0 0 1 4 2v-.5q.001-.264.085-.5M8.5 6.5V8H10a.5.5 0 0 1 0 1H8.5v1.5a.5.5 0 0 1-1 0V9H6a.5.5 0 0 1 0-1h1.5V6.5a.5.5 0 0 1 1 0"/>
+                                </svg>
+
+                                <i class="bi bi-clipboard2-plus-fill"></i>
+                            </div>
+                        </div>
+                    </form>
+                    <br>
+                    <table  *ngIf="data" id="table2" [dtOptions]="dtOptions" datatable class="row-border hover">
+                        <thead>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Opciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of data">
+                                <td>{{item.nombre}}</td>
+
+                                <td style="font-size:1.5em">
+                                    <a style="cursor: pointer;">
+                                        <i aria-placeholder="Editar" (click)="verDetalle(item)"  title="Detalle"   data-bs-toggle="modal" data-bs-target="#modalDetalle" style="color: blue;" class="far fa-file-alt" ></i>
+                                    </a>  
+                                    <span>&nbsp;&nbsp;&nbsp;</span> 
+                                    <a style="cursor: pointer;"> 
+                                        <i    title="Editar"  data-bs-toggle="modal" data-bs-target="#modalusuario" (click)="editar(item)" style="color:green;" class="fas fa-pen" aria-placeholder="Editar"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <!-- <table  id="table2" [dtOptions]="dtOptions" datatable class="row-border hover" >
+                        <thead>
+                            <tr>
+                                <th>Correo</th>
+                                <th>Título</th>
+                                <th>Nombre</th>
+                                <th>Ciudad</th>
+                                <th>Estado</th>
+                                <th>Télefono</th>
+                                <th>Rol</th>
+                                <th>Activo</th>
+                                <th>Opciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of data">
+                                <td>{{item.email}}</td>
+                                <td>{{item.titulo}}</td>
+                                <td>{{item.nombre}}</td>
+                                <td>{{item.ciudad}}</td>
+                                <td>{{item.estado}}</td>
+                                <td>w</td>
+                                <td>w</td>
+                                <td>{{item.activo}}</td>
+                                <td>w</td>
+                            </tr>
+                        </tbody>
+
+                    </table> -->
+
+                    
+                </div>
+                
+            </div>
+        </div>
+
+
+            
+        </div>
+    </div>
+
+</div>
+
+  <!-- Modal -->
+  <div class="modal fade" id="modalusuario" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="exampleModalLabel">{{title_modal}}</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="capturaFormModal">
+                    <div class="row">
+                        <div class="col-lg-6 col-sm-12 mb-2">
+                            
+                            <div class="col-lg-12 col-sm-12 mb-2">
+                                <label>Nombre Rol</label>
+                                <input id="nombre" formControlName="nombre" type="text" class="form-control" placeholder="" autocomplete="off" autofocus>
+                            </div>
+                            
+                        </div>
+
+
+                    </div>             
+                <br/> 
+                </form>
+                <table  *ngIf="dataModulos" id="table2" [dtOptions]="dtOptions" datatable class="row-border hover">
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Catálogo</th>
+                            <th>Nivel</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of dataModulos; let i = index">
+                            <td>{{item.nombre}}</td>
+                            <td>{{item.catalogo}}</td>
+                            <td>
+                                <select class="form-select" [(ngModel)]="dataModulos[i].nivel" aria-label="Default select example">
+                                    <option disabled [ngValue]="null" style="display:none;">Seleccionar</option>
+                                    <ng-container *ngFor="let nivel of DataNiveles">
+                                        <option [ngValue]="nivel.nivel" [selected]="nivel.nivel === dataModulos[i].nivel">{{nivel.display}}</option>
+                                    </ng-container>
+                                </select>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+              <button type="button" class="btn btn-primary" (click)="Guardar()">Guardar</button>
+            </div>
+          </div>
+    </div>
+  </div>
+
+    <!-- ModalEditar -->
+    <div class="modal fade" id="modalusuario" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title fs-5" id="exampleModalLabel">{{title_modal}}</h1>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form [formGroup]="capturaFormModal">
+                        <div class="row">
+                            <div class="col-lg-6 col-sm-12 mb-2">
+                                
+                                <div class="col-lg-12 col-sm-12 mb-2">
+                                    <label>Nombre Rol</label>
+                                    <input id="nombre" formControlName="nombre" type="text" class="form-control" placeholder="" autocomplete="off" autofocus>
+                                </div>
+                                
+                            </div>
+    
+    
+                        </div>             
+                    <br/> 
+                    </form>
+                    <table  *ngIf="dataModulos" id="table2" [dtOptions]="dtOptions" datatable class="row-border hover">
+                        <thead>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Catálogo</th>
+                                <th>Nivel</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of dataModulos; let i = index">
+                                <td>{{item.nombre}}</td>
+                                <td>{{item.catalogo}}</td>
+                                <td>
+                                    <select class="form-select" [(ngModel)]="dataModulos[i].nivel" aria-label="Default select example">
+                                        <option disabled [ngValue]="null" style="display:none;">Seleccionar</option>
+                                        <ng-container *ngFor="let nivel of DataNiveles">
+                                            <option [ngValue]="nivel.nivel" [selected]="nivel.nivel === dataModulos[i].nivel">{{nivel.display}}</option>
+                                        </ng-container>
+                                    </select>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                  <button type="button" class="btn btn-primary"  data-bs-dismiss="modal" (click)="Guardar()">Guardar</button>
+                </div>
+              </div>
+        </div>
+      </div>
+
+    <!-- ModalDetalle -->
+    <div class="modal fade" id="modalDetalle" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title fs-5" id="exampleModalLabel">{{title_modal}}</h1>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form [formGroup]="capturaFormDetalle">
+                        <div class="row">
+                            <div class="col-lg-6 col-sm-12 mb-2">
+                                
+                                <div class="col-lg-12 col-sm-12 mb-2">
+                                    <label>Nombre Rol</label>
+                                    <input id="nombreDetalle" formControlName="nombreDetalle" type="text" class="form-control" placeholder="" autocomplete="off">
+                                </div>
+                                
+                            </div>
+    
+    
+                        </div>             
+                    <br/> 
+                    </form>
+                    <table  *ngIf="dataModulos" id="table2" [dtOptions]="dtOptions" datatable class="row-border hover">
+                        <thead>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Catálogo</th>
+                                <th>Nivel</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of dataModulos; let i = index">
+                                <td>{{item.nombre}}</td>
+                                <td>{{item.catalogo}}</td>
+                                <td>
+                                    <select disabled class="form-select" [(ngModel)]="dataModulos[i].nivel" aria-label="Default select example">
+                                        <option  [ngValue]="null" style="display:none;">Seleccionar</option>
+                                        <ng-container  disabled  *ngFor="let nivel of DataNiveles">
+                                            <option  [ngValue]="nivel.nivel" [selected]="nivel.nivel === dataModulos[i].nivel">{{nivel.display}}</option>
+                                        </ng-container>
+                                    </select>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+        </div>
+      </div>
+
+      
