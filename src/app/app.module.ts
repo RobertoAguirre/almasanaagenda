@@ -17,6 +17,7 @@ import { LoginComponent } from './login/login/login.component';
 import { HomeComponent } from './home/home.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { RolesComponent } from './catalogos/usuarios/roles/roles.component';
+import { CursosComponent } from './catalogos/cursos/cursos.component';
 
 
 @NgModule({
@@ -29,6 +30,7 @@ import { RolesComponent } from './catalogos/usuarios/roles/roles.component';
     HomeComponent,
     ResetPasswordComponent,
     RolesComponent,
+    CursosComponent,
 
   ],
   imports: [
