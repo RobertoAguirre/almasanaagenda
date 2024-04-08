@@ -5,7 +5,7 @@
             <div class="row mb-2">
                
                 <div class="col-sm-6">
-                    <h4>Lista de Ingredientes</h4>
+                    <h4>Lista de Usuarios</h4>
                 </div>
                 
             </div>
@@ -26,7 +26,7 @@
                         <div class="row">
                             <div class="form-group col-md-3">
                                 <label>Estado</label>
-                                <select formControlName="busca" class="form-control select2 select2-hidden-accessible" style="width: 100%;" tabindex="-1" aria-hidden="true">
+                                <select formControlName="busca" (change)="BuscarSeleccionado($event)" class="form-control select2 select2-hidden-accessible" style="width: 100%;" tabindex="-1" aria-hidden="true">
                                     <option disabled selected style="display:none;"></option>
                                     <option *ngFor="let item of _combo_buscar" [value]="item.nombre">{{item.nombre}}</option>
                                 </select>
@@ -34,6 +34,7 @@
                             <div class="form-group col-md-9 d-flex">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-person-fill-add ms-auto" viewBox="0 0 16 16" style="cursor: pointer;" data-bs-toggle="tooltip" data-bs-placement="top" title="Agregar Usuario" (click)="NuevoUsuario()" 
                                 data-bs-toggle="modal" data-bs-target="#modalusuario">
+                                <title>Agregar Usuario</title>
                                     <path d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7m.5-5v1h1a.5.5 0 0 1 0 1h-1v1a.5.5 0 0 1-1 0v-1h-1a.5.5 0 0 1 0-1h1v-1a.5.5 0 0 1 1 0m-2-6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
                                     <path d="M2 13c0 1 1 1 1 1h5.256A4.5 4.5 0 0 1 8 12.5a4.5 4.5 0 0 1 1.544-3.393Q8.844 9.002 8 9c-5 0-6 3-6 4"/>
                                 </svg>
@@ -45,7 +46,6 @@
                         <thead>
                             <tr>
                                 <th>Correo</th>
-                                <th>Título</th>
                                 <th>Nombre</th>
                                 <th>Ciudad</th>
                                 <th>Estado</th>
@@ -57,32 +57,31 @@
                         </thead>
                         <tbody>
                             <tr *ngFor="let item of data">
-                                <td>{{item.email}}</td>
-                                <td>{{item.titulo}}</td>
-                                <td>{{item.nombre}}</td>
+                                <td>{{item.correo}}</td>
+                                <td>{{item.nombre}} {{item.apellido_paterno}} {{item.apellido_materno}}</td>
                                 <td>{{item.ciudad}}</td>
                                 <td>{{item.estado}}</td>
-                                <td></td>
-                                <td></td>
+                                <td>{{item.telefono}}</td>
+                                <td>{{item.nombre_rol}}</td>
                                 <td>
                                    <!--  <div class="custom-control custom-switch">
                                     <input type="checkbox" class="custom-control-input" id="item.id" (change)="activo($event)" [checked]="item.activo">
                                     <label class="custom-control-label" for="item.id"></label>
                                   </div> -->
                                   <a style="cursor:pointer">
-                                    <i  *ngIf="item.activo == 'Checked'"  style="color:green;" class="fas fa-power-off" title="Desactivar"></i>
-                                    <i  *ngIf="item.activo != 'Checked'"  style="color:red;" class="fas fa-power-off" title="Activar"></i>
+                                    <i (click)="activo(item)" *ngIf="item.activo == 'Checked'"  style="color:green;" class="fas fa-power-off" title="Desactivar"></i>
+                                    <i (click)="activo(item)" *ngIf="item.activo != 'Checked'"  style="color:red;" class="fas fa-power-off" title="Activar"></i>
                                   </a>
                                   
                                 </td>
                                 <td style="font-size:1.5em">
-                                    <!-- <a class="{{_ver}}">
-                                        <i aria-placeholder="Editar" (click)="verData(item)" title="Detalle de Usuarios"  data-toggle="modal" data-target="#modal" style="color: blue;" class="fas fa-eye" ></i>
+                                    <a style="cursor: pointer;">
+                                        <i (click)="verDetalle(item)"  title="Detalle"  style="color: blue;" class="far fa-file-alt" ></i>
                                     </a>  
                                     <span>&nbsp;&nbsp;&nbsp;</span> 
-                                    <a class="{{_editar}}"> 
-                                        <i (click)="editar(item)"   title="Editar"   style="color:green;" class="fas fa-edit" aria-placeholder="Editar"></i>
-                                    </a> -->
+                                    <a style="cursor: pointer;"> 
+                                        <i  *ngIf="item.activo == 'Checked'"  title="Editar"  (click)="editar(item)" style="color:green;" class="fas fa-pen" aria-placeholder="Editar"></i>
+                                    </a>
                                 </td>
                             </tr>
                         </tbody>
@@ -143,18 +142,18 @@
                 <form [formGroup]="capturaFormModal">
                     <div class="row">
                         <div class="col-lg-6 col-sm-12 mb-2">
-                            <div class="col-lg-12 col-sm-12 mb-2">
+                            <!-- <div class="col-lg-12 col-sm-12 mb-2">
                                 <label>Es Terapeuta*</label>
                                 <select class="form-select" id="es_terapeuta" formControlName="es_terapeuta" (change)="esTerapeuta($event)" aria-label="Default select example">
                                     <option value="1">Sí</option>
                                     <option value="0" selected>No</option>
                                    
                                   </select>
-                            </div>
-                            <div class="col-lg-12 col-sm-12 mb-2">
+                            </div> -->
+                            <!-- <div class="col-lg-12 col-sm-12 mb-2">
                                 <label>Título</label>
                                 <input id="titulo" formControlName="titulo" type="text" class="form-control" placeholder="" autocomplete="off" autofocus>
-                            </div>
+                            </div> -->
                             <div class="col-lg-12 col-sm-12 mb-2">
                                 <label>Nombre(s)*</label>
                                 <input id="nombre" formControlName="nombre" type="text" class="form-control" placeholder="" autocomplete="off" autofocus>
@@ -180,7 +179,130 @@
                             <br>
                             <div class="col-lg-12 col-sm-12">
                                 <div class="form-group">
-                                    <input id="file" type="file" accept=".jpg,.png" (change)="onFileSelected($event)">
+                                    <input id="file" type="file" accept=".jpg,.png" (change)="onFileSelected($event)" style="display:none">
+
+                                    <!-- Botón personalizado que simula el botón de selección de archivo -->
+                                    <label for="file" class="custom-file-upload" style="width: 100%; text-align: center;margin-top: -1em;">
+                                        Seleccionar archivo
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                <div class="row">
+                    <div class="col-lg-6 col-sm-12 mb-3">
+                        <label>Estado*</label>
+                        <select class="form-select" id="estado" formControlName="estado" aria-label="Default select example" (change)="estadoSelected($event)">
+                            <option disabled selected style="display:none;" ></option>
+                            <option  *ngFor="let item of _combo_estados" [value]="item.id">{{item.estado}}</option>
+                          </select>
+                    </div>
+                    <div class="col-lg-6 col-sm-12 mb-3">
+                        <label>Ciudad*</label>
+                        <select class="form-select" id="ciudad" formControlName="ciudad" aria-label="Default select example">
+                            <option disabled selected style="display:none;" ></option>
+                            <option  *ngFor="let item of _combo_ciudades" [value]="item.id">{{item.nombre}}</option>
+                          </select>
+                    </div>
+                    <div class="col-lg-6 col-sm-12 mb-3">
+                        <label>Roles*</label>
+                        <select class="form-select" id="rol" formControlName="rol" aria-label="Default select example">
+                            <option  selected style="display:none;" ></option>
+                            <option  *ngFor="let item of _combo_roles" [value]="item.id">{{item.nombre}}</option>
+                          </select>
+                    </div>
+                    <div class="col-lg-6 col-sm-12">
+                        <label>Teléfono*</label>
+                        <input id="telefono" formControlName="telefono" type="text" class="form-control"  [value]="phoneNumber" (input)="applyPhoneMask($event)" placeholder="" autocomplete="off" maxlength="14" minlength="14" oninput="this.value = this.value.replace(/[^0-9+]/g, '').replace(/(\..*)\./g, '$1');">
+                    </div>
+
+                    
+                </div>
+
+                <!-- <label><strong>Registro de Teléfono</strong></label>
+                <div class="card card-primary" style="min-height: 10em;">
+                    
+                    <div class="row" style="margin-left: .5em; margin-right: .5em;margin-top: .2em;">
+                        <div class="col-lg-3 col-sm-12">
+                            <label>Tipo</label>
+                            <select class="form-select" aria-label="Default select example">
+                                <option value="Celular">Celular</option>
+                                <option value="Fijo">Fijo</option>
+                              </select>
+                        </div>
+                        <div class="col-lg-3 col-sm-12">
+                            <label>Teléfono</label>
+                            <input id="correo" formControlName="correo" type="text" class="form-control" id="phone" [value]="phoneNumber" (input)="applyPhoneMask($event)" placeholder="" autocomplete="off" maxlength="14" minlength="14" oninput="this.value = this.value.replace(/[^0-9+]/g, '').replace(/(\..*)\./g, '$1');">
+                        </div>
+                        <div class="col-lg-3 col-sm-12">
+                            <label>Extesión</label>
+                            <input id="correo" formControlName="correo" type="text" class="form-control" placeholder="" autocomplete="off"  maxlength="5" oninput="this.value = this.value.replace(/[^0-9+]/g, '').replace(/(\..*)\./g, '$1');">
+                        </div>
+                        
+                    </div>
+                </div>               
+                <br/>  -->
+                </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+            <button *ngIf="edita == 0" type="button" class="btn btn-primary" (click)="guardar('Alta')">Guardar</button>
+            <button *ngIf="edita != 0" type="button" class="btn btn-primary" (click)="guardar('Editar')">Guardar</button>
+            </div>
+          </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="modalVerUsuario" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="exampleModalLabel">{{title_modal}}</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="capturaFormModal">
+                    <div class="row">
+                        <div class="col-lg-6 col-sm-12 mb-2">
+                            <!-- <div class="col-lg-12 col-sm-12 mb-2">
+                                <label>Es Terapeuta*</label>
+                                <select class="form-select" id="es_terapeuta" formControlName="es_terapeuta" (change)="esTerapeuta($event)" aria-label="Default select example">
+                                    <option value="1">Sí</option>
+                                    <option value="0" selected>No</option>
+                                   
+                                  </select>
+                            </div> -->
+                            <!-- <div class="col-lg-12 col-sm-12 mb-2">
+                                <label>Título</label>
+                                <input id="titulo" formControlName="titulo" type="text" class="form-control" placeholder="" autocomplete="off" autofocus>
+                            </div> -->
+                            <div class="col-lg-12 col-sm-12 mb-2">
+                                <label>Nombre(s)*</label>
+                                <input  id="nombre" formControlName="nombre" type="text" class="form-control" placeholder="" autocomplete="off" autofocus>
+                            </div>
+                            <div class="col-lg-12 col-sm-12 mb-2">
+                                <label>Apellido Paterno*</label>
+                                <input id="apellido_paterno" formControlName="apellido_paterno" type="text" class="form-control" placeholder="" autocomplete="off" autofocus>
+                            </div>
+                            <div class="col-lg-12 col-sm-12 mb-2">
+                                <label>Apellido Materno*</label>
+                                <input id="apellido_materno" formControlName="apellido_materno" type="email" class="form-control" placeholder="" autocomplete="off" autofocus>
+                            </div>
+                            <div class="col-lg-12 col-sm-12 mb-2">
+                                <label>Correo*</label>
+                                <input id="correo" formControlName="correo" type="email" class="form-control" placeholder="" autocomplete="off" autofocus>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-sm-12">
+                            <div class="col-lg-12 col-sm-12">
+                               
+                                <img [src]="selectedFile ? selectedFile : 'assets/placeholder-image.jpg'" alt="" class="img-fluid default-image-size">
+                            </div>
+                            <br>
+                            <div class="col-lg-12 col-sm-12">
+                                <div class="form-group">
+                                    <input id="file" type="file" accept=".jpg,.png" (change)="onFileSelected($event)" style="display:none">
                                 </div>
                             </div>
                         </div>

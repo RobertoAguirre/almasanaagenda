@@ -201,6 +201,12 @@ export class RolesComponent implements OnInit {
   }
 
   editar(item){
+    if(item.es_modificable === false){
+      this.capturaFormModal.get('nombre').disable();
+    }
+    else{
+      this.capturaFormModal.get('nombre').enable();
+    }
     this.id_rol = item.id;
     this.title_modal = 'Editar Rol';
     this.capturaFormModal.controls['nombre'].setValue(item.nombre);

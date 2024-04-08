@@ -29,6 +29,9 @@ export class UsuariosComponent implements OnInit {
   phoneNumber: string = '';
   fileTmp;
   id_usuario = 0;
+  edita = 0;
+  buscador = 'Activos';
+  _lista;
 
   capturaFormBuscar = this.formBuilder.group({
     busca:['Activos'],
@@ -37,8 +40,6 @@ export class UsuariosComponent implements OnInit {
   })
 
   capturaFormModal = this.formBuilder.group({
-    es_terapeuta:['0'],
-    titulo:[''],
     nombre:['',Validators.required],
     apellido_paterno:['',Validators.required],
     apellido_materno:['',Validators.required],
@@ -46,7 +47,8 @@ export class UsuariosComponent implements OnInit {
     estado:['',Validators.required],
     ciudad:['',Validators.required],
     rol:['',Validators.required],
-    telefono:['']
+    telefono:[''],
+    file:['']
   })
 
   constructor(
@@ -62,10 +64,10 @@ export class UsuariosComponent implements OnInit {
 
   ngOnInit(): void {
     this.comboEstados();
-    this.listaUsuarios();
-    this.listaRoles();
+    this.listaUsuarios('Checked');
+    
     //console.log('usuarios');
-    this.capturaFormModal.get('titulo').disable();
+    //this.capturaFormModal.get('titulo').disable();
     this.capturaFormModal.get('ciudad').disable();
     this._combo_buscar = [
       {nombre: 'Activos',activo:'Checked'},
@@ -114,17 +116,17 @@ export class UsuariosComponent implements OnInit {
     }
   }
 
-  esTerapeuta(event){
-    let value = parseInt(event.target.value);
-    if (value === 0) {
-      // Si es_terapeuta es 0, deshabilitar el control nombre_usuario
-      this.capturaFormModal.controls['titulo'].setValue('');
-      this.capturaFormModal.get('titulo').disable();
-    } else {
-      // Si es_terapeuta es diferente de 0, habilitar el control nombre_usuario
-      this.capturaFormModal.get('titulo').enable();
-    }
-  }
+  // esTerapeuta(event){
+  //   let value = parseInt(event.target.value);
+  //   if (value === 0) {
+  //     // Si es_terapeuta es 0, deshabilitar el control nombre_usuario
+  //     this.capturaFormModal.controls['titulo'].setValue('');
+  //     this.capturaFormModal.get('titulo').disable();
+  //   } else {
+  //     // Si es_terapeuta es diferente de 0, habilitar el control nombre_usuario
+  //     this.capturaFormModal.get('titulo').enable();
+  //   }
+  // }
 
 
   applyPhoneMask(event: any) {
@@ -152,15 +154,15 @@ export class UsuariosComponent implements OnInit {
   }
 
   BuscarSeleccionado(item){
-/*     this.buscador = item;
+    this.buscador = item.target.value;
     var lista = this._lista;
-    if(item === 'Inactivos'){
+    if(this.buscador === 'Inactivos'){
       lista = lista.filter(word => word.activo === 'Unchecked')
     } 
-    else if(item === 'Activos'){
+    else if(this.buscador === 'Activos'){
       lista = lista.filter(word => word.activo === 'Checked')
     }  
-    this.dataset = lista; */
+    this.data = lista;
   }
 
   listaRoles(){
@@ -174,14 +176,32 @@ export class UsuariosComponent implements OnInit {
     this.apiService.ejecuta(data).subscribe((response) => {
       var _response;
       _response = response;
-      this._combo_roles = _response.success.recordset;
+      var c = _response.success.recordset;
+      this._combo_roles = c.filter(d => d.es_modificable == 1 && d.id != 1);
    
     })
   }
 
   NuevoUsuario(){
+    this.edita = 0;
+    this.listaRoles();
     this.title_modal = 'Nuevo Usuario';
-    
+    this.capturaFormModal.get('nombre').enable();
+    this.capturaFormModal.get('apellido_paterno').enable();
+    this.capturaFormModal.get('apellido_materno').enable();
+    this.capturaFormModal.get('correo').enable();
+    this.capturaFormModal.get('estado').enable();
+    this.capturaFormModal.get('ciudad').enable();
+    this.capturaFormModal.get('rol').enable();
+    this.capturaFormModal.get('telefono').enable();
+    this.capturaFormModal.reset();
+    this.fileTmp = {
+      fileRaw:'',
+      fileName:'',
+      filePath: ''
+    }
+
+    this.selectedFile = '';
   }
 
   comboEstados(){
@@ -215,7 +235,7 @@ export class UsuariosComponent implements OnInit {
     })
   }
 
-  listaUsuarios(){
+  listaUsuarios(item){
     this.capturaFormModal.get('ciudad').enable();
     let data = {
       "appname":this.apiService.server(),
@@ -227,69 +247,240 @@ export class UsuariosComponent implements OnInit {
     this.apiService.ejecuta(data).subscribe((response) => {
       var _response;
       _response = response;
-      this.data = _response.success.recordset;
+      var c = _response.success.recordset;
+      this._lista = c;
+      this.data = c.filter(c => c.activo === item);
     })
+  }
+
+  verDetalle(item){
+    this.title_modal = 'Ver Detalle Usuario'
+    $('#modalVerUsuario').modal('show');
+    this.capturaFormModal.get('nombre').disable();
+    this.capturaFormModal.get('apellido_paterno').disable();
+    this.capturaFormModal.get('apellido_materno').disable();
+    this.capturaFormModal.get('correo').disable();
+    this.capturaFormModal.get('estado').disable();
+    this.capturaFormModal.get('ciudad').disable();
+    this.capturaFormModal.get('rol').disable();
+    this.capturaFormModal.get('telefono').disable();
+
+    let data = {
+      "appname":this.apiService.server(),
+      "sp": 'dbo.Trae_Ciudades',
+      "params": [item.id_estado]
+
+    }
+
+    this.apiService.ejecuta(data).subscribe((response) => {
+      var _response;
+      _response = response;
+      this._combo_ciudades = _response.success.recordset;
+
+
+
+      this.capturaFormModal.controls['nombre'].setValue(item.nombre);
+      this.capturaFormModal.controls['apellido_paterno'].setValue(item.apellido_paterno);
+      this.capturaFormModal.controls['apellido_materno'].setValue(item.apellido_materno);
+      this.capturaFormModal.controls['correo'].setValue(item.correo);
+      this.capturaFormModal.controls['estado'].setValue(item.id_estado);
+      this.capturaFormModal.controls['ciudad'].setValue(item.id_ciudad);
+      
+      this.capturaFormModal.controls['telefono'].setValue(item.telefono);
+      let data = {
+        "appname":this.apiService.server(),
+        "sp": 'dbo.Lista_Roles',
+        "params": []
+  
+      }
+  
+      this.apiService.ejecuta(data).subscribe((response) => {
+        var _response;
+        _response = response;
+        var c = _response.success.recordset;
+        this._combo_roles = c.filter(d => d.es_modificable == 1);
+        this.capturaFormModal.controls['rol'].setValue(item.id_rol);
+     
+      })
+    })
+
+
+  }
+
+  editar(item){
+    this.edita = 1;
+    this.id_usuario = item.id;
+    this.title_modal = 'Editar Usuario'
+    $('#modalusuario').modal('show');
+    
+    let data = {
+      "appname":this.apiService.server(),
+      "sp": 'dbo.Trae_Ciudades',
+      "params": [item.id_estado]
+
+    }
+
+    this.apiService.ejecuta(data).subscribe((response) => {
+      var _response;
+      _response = response;
+      this._combo_ciudades = _response.success.recordset;
+      this.capturaFormModal.get('nombre').enable();
+      this.capturaFormModal.get('apellido_paterno').enable();
+      this.capturaFormModal.get('apellido_materno').enable();
+      this.capturaFormModal.get('correo').enable();
+      this.capturaFormModal.get('estado').enable();
+      this.capturaFormModal.get('ciudad').enable();
+      this.capturaFormModal.get('rol').enable();
+      this.capturaFormModal.get('telefono').enable();
+      this.capturaFormModal.controls['nombre'].setValue(item.nombre);
+      this.capturaFormModal.controls['apellido_paterno'].setValue(item.apellido_paterno);
+      this.capturaFormModal.controls['apellido_materno'].setValue(item.apellido_materno);
+      this.capturaFormModal.controls['correo'].setValue(item.correo);
+      this.capturaFormModal.controls['estado'].setValue(item.id_estado);
+      this.capturaFormModal.controls['ciudad'].setValue(item.id_ciudad);
+      
+      this.capturaFormModal.controls['telefono'].setValue(item.telefono);
+      let data = {
+        "appname":this.apiService.server(),
+        "sp": 'dbo.Lista_Roles',
+        "params": []
+  
+      }
+  
+      this.apiService.ejecuta(data).subscribe((response) => {
+        var _response;
+        _response = response;
+        var c = _response.success.recordset;
+        this._combo_roles = c.filter(d => d.es_modificable == 1);
+        this.capturaFormModal.controls['rol'].setValue(item.id_rol);
+     
+      })
+    })
+
+
+  }
+
+  activo(item){
+    if(item.id === parseInt(localStorage.getItem("id"))){
+      this.appComponent.SwalModals('','No se puede inactivar el usuario logeado','error');
+    }
+    else{
+      Swal.fire({
+        title: "",
+        text: "¿Esta seguro de querer inactivar al usuario '" + item.nombre + " " + item.apellido_paterno + " " + item.apellido_materno +  "' ?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Aceptar",
+        cancelButtonText: "Cancelar"
+      }).then((result) => {
+        if (result.isConfirmed) {
+          let activo = 1;
+          if(item.activo === 'Checked'){
+            activo = 0;
+          }
+          
+          var params=[item.id, activo]
+          this.apiService.ejecutar('dbo.Activar_Inactivar_Usuario',params).subscribe((response) => {
+            let _response;
+            _response = response;
+            let d = _response.success.recordsets[0];
+            if(d[0].error == 1){
+              this.appComponent.SwalModals('',d[0].mensaje, d[0].icono);
+              //this.appComponent.hideSpinner();
+              
+            }
+            if(d[0].error == 0){
+              this.appComponent.SwalModals('',d[0].mensaje, d[0].icono);
+              //this.appComponent.hideSpinner();
+              /* $("#modal").prop("hidden",true);
+              $('.modal-backdrop').hide() */
+              $('.modal').click()
+              
+              window.scroll(0, 0);
+              this.listaUsuarios(item.activo);
+            }
+      
+            
+          })  
+        }
+      });
+      //this.dataset = arraySinDuplicados;
+
+      
+    }
+    
   }
 
   guardar(item){
     if (this.capturaFormModal.valid) {
       // Realizar acción de guardado
-      var data;
-      data = this.capturaFormModal.value;
-      let params = [this.id_usuario,JSON.stringify(data),item];
-
-      this.apiService.ejecutar('dbo.Guarda_Usuario',params).subscribe((response) =>{
-        let _response;
-        _response = response;
-        if(_response.err){
-          this.appComponent.SwalModals('Internal Error',_response.err.originalError.info.message, 'error');        
-        }
-        else{
-          let d = _response.success.recordsets[0];
-          if(d[0].error == 1){
-            this.appComponent.SwalModals('',d[0].mensaje, d[0].icono);                    
-          }
-          if(d[0].error == 0){
-            if(this.fileTmp){
-              var c = 'user_' + d[0].id + '.' + this.fileTmp.fileName.split('.').pop();
-              this.appComponent.SwalModals('',d[0].mensaje, d[0].icono);
-              const body = new FormData();
-              body.append('myFile', this.fileTmp.fileRaw,this.fileTmp.fileName);
-              body.append('directory', 'archivos/usuarios/');
-              body.append('accion', 'nuevos');
-              body.append('archivo', c);  
-              this.apiService.uploadImage(body).subscribe((response) => {
-                let _response;
-                _response = response;
-                let params = [d[0].id,c];
+      if(this.capturaFormModal.value.telefono == null || this.capturaFormModal.value.telefono == ''){
+        this.appComponent.SwalModals('','Por favor complete todos los campos obligatorios.','error');
+      }
+      else{
+        var data;
+        data = this.capturaFormModal.value;
+        let params = [this.id_usuario,JSON.stringify(data),item];
   
-                this.apiService.ejecutar('dbo.Guarda_Imagen',params).subscribe((response) =>{
+        this.apiService.ejecutar('dbo.Guarda_Usuario',params).subscribe((response) =>{
+          let _response;
+          _response = response;
+          if(_response.err){
+            this.appComponent.SwalModals('Internal Error',_response.err.originalError.info.message, 'error');        
+          }
+          else{
+            let d = _response.success.recordsets[0];
+            if(d[0].error == 1){
+              this.appComponent.SwalModals('',d[0].mensaje, d[0].icono);                    
+            }
+            if(d[0].error == 0){
+              if(this.fileTmp){
+                var c = 'user_' + d[0].id + '.' + this.fileTmp.fileName.split('.').pop();
+                this.appComponent.SwalModals('',d[0].mensaje, d[0].icono);
+                const body = new FormData();
+                body.append('myFile', this.fileTmp.fileRaw,this.fileTmp.fileName);
+                body.append('directory', 'archivos/usuarios/');
+                body.append('accion', 'nuevos');
+                body.append('archivo', c);  
+                this.apiService.uploadImage(body).subscribe((response) => {
                   let _response;
                   _response = response;
-                  $('#modalusuario').modal('hide');
-                  $('.modal-backdrop').remove();
-                  this.listaUsuarios();
-              
-                })
-  
-              })
-            }
-            else{
-              $('#modalusuario').modal('hide');
-              $('.modal-backdrop').remove();
-              this.listaUsuarios();
-              this.appComponent.SwalModals('',d[0].mensaje, d[0].icono);
-            }
-
-
-          }
-        }
+                  let params = [d[0].id,c];
     
-      });
+                  this.apiService.ejecutar('dbo.Guarda_Imagen',params).subscribe((response) =>{
+                    let _response;
+                    _response = response;
+                    $('#modalusuario').modal('hide');
+                    $('.modal-backdrop').remove();
+                    
+                    this.listaUsuarios('Checked');
+                
+                  })
+    
+                })
+              }
+              else{
+                $('#modalusuario').modal('hide');
+                $('.modal-backdrop').remove();
+                this.listaUsuarios('Checked');
+                this.appComponent.SwalModals('',d[0].mensaje, d[0].icono);
+              }
+  
+  
+            }
+          }
+      
+        });
+      }
+
+      
     } 
     else {
       // Mostrar un mensaje de error o realizar alguna acción adicional si el formulario no es válido
       console.log('Formulario no válido. Por favor complete todos los campos obligatorios.');
+      this.appComponent.SwalModals('','Por favor complete todos los campos obligatorios.','error');
     }
   }
 

@@ -29,10 +29,15 @@ export class LoginComponent implements OnInit {
       usuario: new FormControl,
       pass: new FormControl
     })
-    
+    this.isLoggedIn();
   }
 
   ngOnInit(): void {
+  }
+
+  isLoggedIn(): boolean {
+    // Lógica para verificar si el usuario ha iniciado sesión, por ejemplo, utilizando un servicio de autenticación
+    return this.authService.isLoggedIn();
   }
 
   autentificar(email,pass) {

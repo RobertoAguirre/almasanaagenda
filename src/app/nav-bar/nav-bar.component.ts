@@ -71,13 +71,18 @@ export class NavBarComponent implements OnInit {
 
 
   toggleMenu() {
+   
+  
     //this.isOpen = !this.isOpen;
 /* 
     const backdrop = document.querySelector('.offcanvas-backdrop');
     backdrop.remove(); */
   }
   toggleSidebar(){
-    this.isCollapsed = !this.isCollapsed;
+    const offcanvasElement = document.getElementById('offcanvasNavbar'); // Reemplaza 'miOffcanvas' con el ID de tu offcanvas
+    const offcanvas = new bootstrap.Offcanvas(offcanvasElement); // Crea una instancia del offcanvas
+  
+    offcanvas.hide();
   }
   toggleCollapse(index: number) {
     //this.isCollapsed = !this.isCollapsed;
