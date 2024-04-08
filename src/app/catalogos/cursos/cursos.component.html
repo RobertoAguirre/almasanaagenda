@@ -1,0 +1,158 @@
+<!-- <app-nav-bar></app-nav-bar> -->
+<div class="content-wrapper" style="min-height: 1365.62px;">
+    <section class="content-header" style="margin-top: 1em;">
+        <div class="container-fluid">
+            <div class="row mb-2">
+               
+                <div class="col-sm-6">
+                    <h4>Cursos</h4>
+                </div>
+                
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+
+    <div class="content" >
+        <div class=" container-fluid">
+                
+        <!-- left column -->
+        <div class="col-md-12">
+            <!-- general form elements -->
+            <div class="card card-primary" style="min-height: 10em;">
+                <br/>
+                <div class="col-md-12 table-responsive container-fluid"  >
+
+                    <form [formGroup]="capturaFormBuscar">
+                        <div class="row">
+                            <div class="form-group col-md-3">
+                                <label>Estado</label>
+                                <select formControlName="busca" class="form-control select2 select2-hidden-accessible" style="width: 100%;" tabindex="-1" aria-hidden="true">
+                                    <option disabled selected style="display:none;"></option>
+                                    <option *ngFor="let item of _combo_buscar" [value]="item.nombre">{{item.nombre}}</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-9 d-flex">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-person-fill-add ms-auto" viewBox="0 0 16 16" style="cursor: pointer;" data-bs-toggle="tooltip" data-bs-placement="top" title="Agregar Usuario" (click)="NuevoUsuario()" 
+                                data-bs-toggle="modal" data-bs-target="#modalusuario">
+                                    <path d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7m.5-5v1h1a.5.5 0 0 1 0 1h-1v1a.5.5 0 0 1-1 0v-1h-1a.5.5 0 0 1 0-1h1v-1a.5.5 0 0 1 1 0m-2-6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
+                                    <path d="M2 13c0 1 1 1 1 1h5.256A4.5 4.5 0 0 1 8 12.5a4.5 4.5 0 0 1 1.544-3.393Q8.844 9.002 8 9c-5 0-6 3-6 4"/>
+                                </svg>
+                            </div>
+                        </div>
+                    </form>
+                    <br>
+                    <table  *ngIf="data" id="table2" [dtOptions]="dtOptions" datatable class="row-border hover">
+                        <thead>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Impartido por</th>
+                                <th>Duracion</th>
+                                <th>Costo</th>
+                                <th>Detalle</th>
+                                <th>Estado</th>
+                                <th>Opciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of data">
+                                <td>{{item.nombre}}</td>
+                                <td>{{item.impartido_por}}</td>
+                                <td>{{item.duracion}}</td>
+                                <td>{{item.costo}}</td>
+                                <td>{{item.detalles}}</td>                                
+                                <td>
+                                  <a style="cursor:pointer">
+                                    <i  *ngIf="item.activo == 'Checked'"  style="color:green;" class="fas fa-power-off" title="Desactivar"></i>
+                                    <i  *ngIf="item.activo != 'Checked'"  style="color:red;" class="fas fa-power-off" title="Activar"></i>
+                                  </a>
+                                </td>
+                                <td style="font-size:1.5em">
+                                    <a style="cursor: pointer;">
+                                        <i title="Detalle" (click)="editar(item,false)" data-bs-toggle="modal" aria-placeholder="Editar" data-bs-target="#modalusuario" style="color: blue;" class="far fa-file-alt" ></i>
+                                    </a>  
+                                    <span>&nbsp;&nbsp;&nbsp;</span> 
+                                    <a style="cursor: pointer;"> 
+                                        <i title="Editar" (click)="editar(item,true)" data-bs-toggle="modal" aria-placeholder="Editar" data-bs-target="#modalusuario"  style="color:green;" class="fas fa-pen" ></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>                                  
+                </div>
+            </div>
+        </div> 
+        </div>
+    </div>
+</div>
+
+  <!-- Modal -->
+  <div class="modal fade" id="modalusuario" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="exampleModalLabel">{{title_modal}}</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="capturaFormModal">
+                    <div class="row">                                                  
+                        <div class="col-lg-6 col-sm-12 mb-3">
+                            <label>Nombre</label>
+                            <ng-container *ngIf="lEditar; else Readonlynombre">
+                                <input id="nombre" formControlName="nombre" type="text" class="form-control" placeholder="" autocomplete="off" autofocus>
+                            </ng-container>
+                            <ng-template #Readonlynombre> 
+                                <br> 
+                                <input id="nombre" formControlName="nombre" type="text" class="form-control" placeholder="" autocomplete="off" autofocus readonly>
+                            </ng-template>
+                        </div>
+                        <div class="col-lg-6 col-sm-12 mb-3">
+                            <label>Impartido Por</label>
+                            <ng-container *ngIf="lEditar; else Readonlyimpartido_por">
+                                <input id="impartido_por" formControlName="impartido_por" type="text" class="form-control" placeholder="" autocomplete="off" autofocus>
+                            </ng-container>
+                            <ng-template #Readonlyimpartido_por> 
+                                <br> 
+                                <input id="impartido_por" formControlName="impartido_por" type="text" class="form-control" placeholder="" autocomplete="off" autofocus readonly>
+                            </ng-template>                            
+                        </div>
+                        <div class="col-lg-6 col-sm-12 mb-3">
+                            <label>Duracion</label>
+                            <ng-container *ngIf="lEditar; else Readonlyduracion">
+                                <input id="duracion" formControlName="duracion" type="text" class="form-control" placeholder="" autocomplete="off" autofocus>
+                            </ng-container>
+                            <ng-template #Readonlyduracion> 
+                                <br> 
+                                <input id="duracion" formControlName="duracion" type="text" class="form-control" placeholder="" autocomplete="off" autofocus readonly>
+                            </ng-template>                            
+                        </div>
+                        <div class="col-lg-6 col-sm-12 mb-3">
+                            <label>Costo</label>
+                            <ng-container *ngIf="lEditar; else Readonlycosto">
+                                <input id="costo" formControlName="costo" type="text" class="form-control" placeholder="" autocomplete="off" autofocus oninput="this.value = this.value.replace(/[^0-9+]/g, '').replace(/(\..*)\./g, '$1');">
+                            </ng-container>
+                            <ng-template #Readonlycosto> 
+                                <br> 
+                                <input id="costo" formControlName="costo" type="text" class="form-control" placeholder="" autocomplete="off" autofocus readonly>
+                            </ng-template>                            
+                        </div>
+                        <div class="col-lg-12 col-sm-12 mb-3">
+                            <label>Detalle</label>
+                            <ng-container *ngIf="lEditar; else Readonlydetalles">
+                                <input id="detalles" formControlName="detalles" type="text" class="form-control" placeholder="" autocomplete="off" autofocus>
+                            </ng-container>
+                            <ng-template #Readonlydetalles> 
+                                <br> 
+                                <input id="detalles" formControlName="detalles" type="text" class="form-control" placeholder="" autocomplete="off" autofocus readonly>
+                            </ng-template>                            
+                        </div>                       
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="cancelar()">Cerrar</button>
+            <button type="button" class="btn btn-primary" (click)="guardar()">Guardar</button>
+            </div>
+          </div>
+    </div>
+  </div>

@@ -8,6 +8,7 @@ import { LoginComponent } from './login/login/login.component';
 import { HomeComponent } from './home/home.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { RolesComponent } from './catalogos/usuarios/roles/roles.component';
+import { CursosComponent } from './catalogos/cursos/cursos.component';
 
 
 const routes: Routes = [
@@ -17,6 +18,7 @@ const routes: Routes = [
   { path: 'usuarios', component: UsuariosComponent, pathMatch: "full" },
   { path: 'roles', component: RolesComponent, pathMatch: "full" },
   { path: 'reset-password', component: ResetPasswordComponent, pathMatch:"full"},
+  { path: 'cursos', component: CursosComponent, pathMatch:"full"},
 ];
 
 @NgModule({

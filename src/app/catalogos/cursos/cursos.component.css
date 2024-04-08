@@ -1,0 +1,15 @@
+.default-image-size {
+    width: 100%; /* Ancho completo del contenedor */
+    height: 21em; /* Altura de 8em */
+    object-fit: contain; /* Ajusta la imagen dentro del contenedor */
+}
+
+.custom-btn {
+    cursor: pointer;
+    
+  }
+  
+  .custom-disabled {
+    pointer-events: none; /* Deshabilita eventos de puntero */
+    opacity: 0.5; /* Opcional: Reduce la opacidad para indicar visualmente que está deshabilitado */
+  }
