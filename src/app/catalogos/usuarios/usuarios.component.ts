@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ApiService } from '../../services/api.service';
 import { AuthService } from '../../services/auth.service';
-import { FormBuilder, ReactiveFormsModule, FormGroup, Validators, FormControl } from '@angular/forms';
+import { UntypedFormBuilder, ReactiveFormsModule, FormGroup, Validators, FormControl } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { AppComponent } from 'src/app/app.component';
 
@@ -54,7 +54,7 @@ export class UsuariosComponent implements OnInit {
   constructor(
     private apiService: ApiService,
     private authService: AuthService,
-    public formBuilder: FormBuilder,
+    public formBuilder: UntypedFormBuilder,
     private appComponent: AppComponent
 /*     private router: Router,
     private appComponent: AppComponent */

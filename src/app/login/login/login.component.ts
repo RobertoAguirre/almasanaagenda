@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject, PLATFORM_ID } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 import { ApiService } from '../../services/api.service';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
@@ -25,9 +25,9 @@ export class LoginComponent implements OnInit {
     private appComponent: AppComponent
 
   ) {
-    this.loginForm = new FormGroup({
-      usuario: new FormControl,
-      pass: new FormControl
+    this.loginForm = new UntypedFormGroup({
+      usuario: new UntypedFormControl,
+      pass: new UntypedFormControl
     })
     this.isLoggedIn();
   }
