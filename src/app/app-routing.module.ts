@@ -9,10 +9,12 @@ import { HomeComponent } from './home/home.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { RolesComponent } from './catalogos/usuarios/roles/roles.component';
 import { CursosComponent } from './catalogos/cursos/cursos.component';
+import { AgendaComponent } from './agenda/agenda.component';
 
 
 const routes: Routes = [
-  { path: '', component: LoginComponent, pathMatch: "full" },
+  {path:'',component:AgendaComponent,pathMatch:"full"},
+  //{ path: '', component: LoginComponent, pathMatch: "full" },
   { path: 'home', component: HomeComponent, pathMatch: "full" },
   { path: 'terapeutas', component: TerapeutasComponent, pathMatch: "full" },
   { path: 'usuarios', component: UsuariosComponent, pathMatch: "full" },

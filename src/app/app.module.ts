@@ -3,6 +3,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { DataTablesModule } from 'angular-datatables';
 
+import { FullCalendarModule } from '@fullcalendar/angular'; // Importa FullCalendarModule
+
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
@@ -18,6 +20,7 @@ import { HomeComponent } from './home/home.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { RolesComponent } from './catalogos/usuarios/roles/roles.component';
 import { CursosComponent } from './catalogos/cursos/cursos.component';
+import { AgendaComponent } from './agenda/agenda.component';
 
 
 @NgModule({
@@ -31,6 +34,7 @@ import { CursosComponent } from './catalogos/cursos/cursos.component';
     ResetPasswordComponent,
     RolesComponent,
     CursosComponent,
+    AgendaComponent,
 
   ],
   imports: [
@@ -39,7 +43,8 @@ import { CursosComponent } from './catalogos/cursos/cursos.component';
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FullCalendarModule 
   ],
   providers: [],
   bootstrap: [AppComponent]
