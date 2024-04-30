@@ -13,19 +13,20 @@ import { AgendaComponent } from './agenda/agenda.component';
 
 
 const routes: Routes = [
-  {path:'',component:AgendaComponent,pathMatch:"full"},
-  //{ path: '', component: LoginComponent, pathMatch: "full" },
+  //
+  { path: '', component: LoginComponent, pathMatch: "full" },
   { path: 'home', component: HomeComponent, pathMatch: "full" },
   { path: 'terapeutas', component: TerapeutasComponent, pathMatch: "full" },
   { path: 'usuarios', component: UsuariosComponent, pathMatch: "full" },
   { path: 'roles', component: RolesComponent, pathMatch: "full" },
   { path: 'reset-password', component: ResetPasswordComponent, pathMatch:"full"},
   { path: 'cursos', component: CursosComponent, pathMatch:"full"},
+  { path:'agenda',component:AgendaComponent,pathMatch:"full"},
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes, {
-    initialNavigation: 'enabled'
+    initialNavigation: 'enabledNonBlocking' 
 
   })],
   exports: [RouterModule],

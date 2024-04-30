@@ -3,8 +3,9 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { DataTablesModule } from 'angular-datatables';
 
-import { FullCalendarModule } from '@fullcalendar/angular'; // Importa FullCalendarModule
+import { FullCalendarModule } from '@fullcalendar/angular';
 
+import dayGridPlugin from '@fullcalendar/daygrid'; // Importa el plugin dayGrid
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 

@@ -1,1 +1,22 @@
-<full-calendar [options]="calendarOptions"></full-calendar>
+<div class="content-wrapper" style="min-height: 1365.62px;">
+    <section class="content-header" style="margin-top: 1em;">
+        <div class="container-fluid">
+            <div class="row mb-2">
+               
+                <div class="col-sm-6">
+                    <h4>Agenda</h4>
+                </div>
+                
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+
+    <div class="content" >
+        <div class=" container-fluid">
+            <full-calendar [options]="calendarOptions" [events]="eventsPromise | async"></full-calendar>
+        </div>
+    </div>
+
+
+
+</div>
