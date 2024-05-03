@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { CalendarOptions, EventInput } from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
+import timeGridPlugin from '@fullcalendar/timegrid'; // Agrega esta línea
+
 import interactionPlugin from '@fullcalendar/interaction';
 import Swal from 'sweetalert2';
 import { ApiService } from '../services/api.service';
+import esLocale from '@fullcalendar/core/locales/es';
 
 @Component({
   selector: 'app-agenda',
@@ -14,12 +17,19 @@ export class AgendaComponent implements OnInit {
   public citas=[];
 
   calendarOptions: CalendarOptions = {
-    plugins: [dayGridPlugin,interactionPlugin],
-    initialView: 'dayGridMonth',
+    plugins: [dayGridPlugin,interactionPlugin,timeGridPlugin],
+    initialView: 'timeGridWeek',
     dateClick: (arg) => this.openModal(arg.dateStr),
     eventClick: (arg) => this.handleDateClick(arg),
     weekends: true,
-    events: []
+    locale: esLocale,
+    firstDay: 0,
+    events: [],
+    headerToolbar: {
+      start: 'dayGridMonth,timeGridWeek,timeGridDay', // Agregar opciones de vista de mes, semana y día
+      center: 'title',
+      end: 'today prev,next',
+    },  
   };
   eventsPromise: Promise<EventInput[]>;
 
