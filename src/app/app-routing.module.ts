@@ -13,8 +13,8 @@ import { AgendaComponent } from './agenda/agenda.component';
 
 
 const routes: Routes = [
-  //
-  { path: '', component: LoginComponent, pathMatch: "full" },
+  { path:'',component:AgendaComponent,pathMatch:"full"},
+  //{ path: '', component: LoginComponent, pathMatch: "full" },
   { path: 'home', component: HomeComponent, pathMatch: "full" },
   { path: 'terapeutas', component: TerapeutasComponent, pathMatch: "full" },
   { path: 'usuarios', component: UsuariosComponent, pathMatch: "full" },

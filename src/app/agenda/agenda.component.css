@@ -13,3 +13,33 @@
     pointer-events: none; /* Deshabilita eventos de puntero */
     opacity: 0.5; /* Opcional: Reduce la opacidad para indicar visualmente que está deshabilitado */
   }
+
+  /* Estilo del encabezado del calendario */
+.fc-header-toolbar {
+  background-color: #f2f2f2 !important; /* Un gris claro */
+  color: #004185 !important; /* Un azul similar al del botón Acceder */
+}
+
+/* Estilo de los botones */
+.fc-button-primary {
+  background-color: #004185 !important;
+  border-color: #004185 !important;
+}
+
+.fc-button-primary:not(:disabled):hover {
+  background-color: #003366 !important;
+  border-color: #003366 !important;
+}
+
+/* Estilo de los eventos */
+.fc-event {
+  background-color: #e57373 !important; /* Un tono rojo coral */
+  border-color: #e57373 !important;
+  color: white!important;  /* Texto en blanco para mejor contraste */
+}
+
+/* Cambia el color de los días del fin de semana */
+.fc-day-sat,
+.fc-day-sun {
+  background-color: #f9f9f9 !important;
+}
